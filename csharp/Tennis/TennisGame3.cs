@@ -8,39 +8,38 @@ namespace Tennis
             public string Name { get; set; }
         }
         
-        private Player player1;
-        private Player player2;
+        private readonly Player _player1;
+        private readonly Player _player2;
         
         public TennisGame3(string player1Name, string player2Name)
         {
-            this.player1 = new Player() { Name = player1Name };
-            this.player2 = new Player() { Name = player2Name };
+            this._player1 = new Player() { Name = player1Name };
+            this._player2 = new Player() { Name = player2Name };
         }
 
         public string GetScore()
         {
-            string s;
-            if ((player1.Score < 4 && player2.Score < 4) && (player1.Score + player2.Score < 6))
+            
+            if ((_player1.Score < 4 && _player2.Score < 4) && (_player1.Score + _player2.Score < 6))
             {
-                string[] p = { "Love", "Fifteen", "Thirty", "Forty" };
-                s = p[player1.Score];
-                return (player1.Score == player2.Score) ? s + "-All" : s + "-" + p[player2.Score];
+                string[] p = ["Love", "Fifteen", "Thirty", "Forty"];
+                return (_player1.Score == _player2.Score) ? p[_player1.Score] + "-All" : p[_player1.Score] + "-" + p[_player2.Score];
             }
             else
             {
-                if (player1.Score == player2.Score)
+                if (_player1.Score == _player2.Score)
                     return "Deuce";
-                s = player1.Score > player2.Score ? player1.Name : player2.Name;
-                return ((player1.Score - player2.Score) * (player1.Score - player2.Score) == 1) ? "Advantage " + s : "Win for " + s;
+                var lead = _player1.Score > _player2.Score ? _player1.Name : _player2.Name;
+                return ((_player1.Score - _player2.Score) == 1  || (_player2.Score - _player1.Score) == 1) ? "Advantage " + lead : "Win for " + lead;
             }
         }
 
         public void WonPoint(string playerName)
         {
-            if (playerName == player1.Name)
-                this.player1.Score += 1;
-            else if (playerName == player2.Name)
-                this.player2.Score += 1;
+            if (playerName == _player1.Name)
+                _player1.Score += 1;
+            else if (playerName == _player2.Name)
+                _player2.Score += 1;
         }
 
     }
