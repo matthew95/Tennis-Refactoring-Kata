@@ -1,4 +1,4 @@
-namespace Tennis.TG3;
+namespace Tennis.TG3.states;
 
 public class WonState: IState
 {
