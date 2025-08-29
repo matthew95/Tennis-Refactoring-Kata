@@ -16,10 +16,10 @@ namespace Tennis
             this._player1 = new Player() { Name = player1Name };
             this._player2 = new Player() { Name = player2Name };
         }
-
-        private static bool diffeq(int p1, int p2, int to)
+        
+        private static string GetLeadName(Player player1, Player player2)
         {
-            return (p1 - p2) == to || (p2 - p1) == to;
+            return player1.Score > player2.Score ? player1.Name : player2.Name;
         }
 
         private interface IState
@@ -39,7 +39,7 @@ namespace Tennis
 
             public IState WonPoint(TennisGame3 game)
             {
-                if ((game._player1.Score >= 3 || game._player2.Score >= 3) && diffeq(game._player1.Score, game._player2.Score, 0))
+                if ((game._player1.Score >= 3 || game._player2.Score >= 3) && game._player1.Score == game._player2.Score)
                 {
                     return new Deuce();
                 }
@@ -70,13 +70,12 @@ namespace Tennis
         {
             public string GetScore(TennisGame3 game)
             {
-                var lead = game._player1.Score > game._player2.Score ? game._player1.Name : game._player2.Name;
-                return "Advantage " + lead;
+                return "Advantage " + GetLeadName(game._player1, game._player2);
             }
 
             public IState WonPoint(TennisGame3 game)
             {
-                if (diffeq(game._player1.Score, game._player2.Score, 0))
+                if (game._player1.Score == game._player2.Score)
                 {
                     return new Deuce();
                 }
@@ -89,8 +88,7 @@ namespace Tennis
         {
             public string GetScore(TennisGame3 game)
             {
-                var lead = game._player1.Score > game._player2.Score ? game._player1.Name : game._player2.Name;
-                return "Win for " + lead;
+                return "Win for " + GetLeadName(game._player1, game._player2);
             }
 
             public IState WonPoint(TennisGame3 game)
@@ -108,9 +106,14 @@ namespace Tennis
         public void WonPoint(string playerName)
         {
             if (playerName == _player1.Name)
+            {
                 _player1.Score += 1;
-            else if (playerName == _player2.Name)
+            }
+
+            if (playerName == _player2.Name)
+            {
                 _player2.Score += 1;
+            }
             
             _state = _state.WonPoint(this);
         }
