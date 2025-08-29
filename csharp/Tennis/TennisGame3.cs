@@ -21,11 +21,6 @@ namespace Tennis
         {
             return (p1 - p2) == to || (p2 - p1) == to;
         }
-        
-        private static bool diffeqgt(int p1, int p2, int than)
-        {
-            return (p1 - p2) >= than || (p2 - p1) >= than;
-        }
 
         private interface IState
         {
@@ -107,27 +102,7 @@ namespace Tennis
 
         public string GetScore()
         {
-            // if ((_player1.Score > 2 || _player2.Score > 2) && diffeq(_player1.Score, _player2.Score, 0))
-            //     return "Deuce";
-            //
-            //
-            // if ((_player1.Score > 3 || _player2.Score > 3) && diffeq(_player1.Score, _player2.Score, 1))
-            // {
-            //     var lead = _player1.Score > _player2.Score ? _player1.Name : _player2.Name;
-            //     return "Advantage " + lead;
-            // }
-            //
-            // if ((_player1.Score > 3 || _player2.Score > 3) && diffeqgt(_player1.Score, _player2.Score, 2))
-            // {
-            //     var lead = _player1.Score > _player2.Score ? _player1.Name : _player2.Name;
-            //     return "Win for " + lead;
-            // }
-            
-            
-            
             return _state.GetScore(this);
-            // string[] p = ["Love", "Fifteen", "Thirty", "Forty"];
-            // return (_player1.Score == _player2.Score) ? p[_player1.Score] + "-All" : p[_player1.Score] + "-" + p[_player2.Score];
         }
 
         public void WonPoint(string playerName)
