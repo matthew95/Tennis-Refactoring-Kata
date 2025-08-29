@@ -44,7 +44,7 @@ namespace Tennis
 
             public IState WonPoint(TennisGame3 game)
             {
-                if ((game._player1.Score > 2 || game._player2.Score > 2) && diffeq(game._player1.Score, game._player2.Score, 0))
+                if ((game._player1.Score >= 3 || game._player2.Score >= 3) && diffeq(game._player1.Score, game._player2.Score, 0))
                 {
                     return new Deuce();
                 }
