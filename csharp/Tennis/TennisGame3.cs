@@ -17,21 +17,23 @@ namespace Tennis
             this._player2 = new Player() { Name = player2Name };
         }
 
+        private bool diffeq(int p1, int p2, int to)
+        {
+            return (p1 - p2) == to || (p2 - p1) == to;
+        }
         public string GetScore()
         {
+            if ((_player1.Score >= 3 || _player2.Score >= 3) && _player1.Score == _player2.Score)
+                return "Deuce";
             
-            if ((_player1.Score < 4 && _player2.Score < 4) && (_player1.Score + _player2.Score < 6))
+            if ((_player1.Score > 3 || _player2.Score > 3) && _player1.Score != _player2.Score)
             {
-                string[] p = ["Love", "Fifteen", "Thirty", "Forty"];
-                return (_player1.Score == _player2.Score) ? p[_player1.Score] + "-All" : p[_player1.Score] + "-" + p[_player2.Score];
-            }
-            else
-            {
-                if (_player1.Score == _player2.Score)
-                    return "Deuce";
                 var lead = _player1.Score > _player2.Score ? _player1.Name : _player2.Name;
-                return ((_player1.Score - _player2.Score) == 1  || (_player2.Score - _player1.Score) == 1) ? "Advantage " + lead : "Win for " + lead;
+                return diffeq(_player1.Score, _player2.Score, 1) ? "Advantage " + lead : "Win for " + lead;
             }
+            
+            string[] p = ["Love", "Fifteen", "Thirty", "Forty"];
+            return (_player1.Score == _player2.Score) ? p[_player1.Score] + "-All" : p[_player1.Score] + "-" + p[_player2.Score];
         }
 
         public void WonPoint(string playerName)
